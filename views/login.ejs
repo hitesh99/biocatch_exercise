@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Login</title>
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet" />
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://bcdn-4ff4f23f.we-stats.com/scripts/4ff4f23f/4ff4f23f.js"></script>
+
+    <form class="form-signin">
+        <div class="text-center mb-4">
+            <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col">
+                    <input type="text" class="form-control" placeholder="User Name" required />
+                </div>
+                <div class="col">
+                    <input type="Password" class="form-control" placeholder="Password" required />
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-med btn-info btn-block" type="button" onclick="login()">Login</button>
+        <br></br>
+        <!--
+            <div class="form-group">
+                <label>Cookie ID</label>
+                <input type="text" id="cookieID" class="form-control" placeholder="Cookie ID" autofocus readonly />
+            </div>
+        -->
+        <div class="form-group">
+            <label>Session ID</label>
+            <input type="text" id="sessionID" class="form-control" placeholder="Session ID" autofocus readonly />
+        </div>
+        <!--            <button class="btn btn-med btn-info btn-block" type="button" onclick="requestInit()">Request Init</button>
+
+            <div class="form-group">
+                <input type="text" id="requestInit" class="form-control"  readonly />
+            </div>
+           <button class="btn btn-med btn-primary btn-block" type="button" onclick="getSessionID()">Generate Session ID</button>
+            <button class="btn btn-med btn-danger btn-block" type="button" onclick="deleteSession()">Remove Session ID</button>
+-->
+        <script type="text/javascript">
+                checkSessionID()
+                cdApi.changeContext(window.location.pathname)
+
+                function checkSessionID() {
+                    let y = window.sessionStorage.setCustomerSessionId;
+                    if (y === null || y === undefined) {
+                        getSessionID();
+                    } else {
+                        let currentSValue = window.sessionStorage.setCustomerSessionId;
+                        document.getElementById("sessionID").value = currentSValue;
+                        cdApi.setCustomerSessionId(currentSValue)
+                    }
+                }
+
+                function getSessionID() {
+                    let r = Math.random().toString(36).substring(2, 30);
+                    let uniqueID = Math.random().toString(36).substring(2, 30);
+                    document.getElementById("sessionID").value = r;
+                    if (window.sessionStorage.value !== null) {
+                        window.sessionStorage.setItem("setCustomerSessionId", r);
+                        window.sessionStorage.setItem("uniqueID", uniqueID);
+                        cdApi.setCustomerSessionId(r);
+                    } else {
+                        console.log("hello");
+                    }
+                }
+
+                async function login() {
+                   let x = window.sessionStorage.getItem("setCustomerSessionId")
+                   let y = window.sessionStorage.getItem("uniqueID")
+                   const response = await fetch(`/initCall?action=init&customerId=dummy&customerSessionId=${x}&uuid=${y}`);
+                    const initValue = await response.json();
+                    window.sessionStorage.setItem("initvalue", JSON.stringify(initValue));
+                   window.location.href = `/home`; 
+
+                }
+
+        </script>
+
+        <!-- <script type="text/javascript">
+                function deleteSession() {
+                    document.getElementById("sessionID").value = "";
+                    window.sessionStorage.removeItem("setCustomerSessionId");
+                }
+            </script>
+
+            <script type="text/javascript">
+                function getCookieID() {
+                    var x = document.cookie;
+                    cookiearray = x.split(";");
+                    var i = 0;
+                    value = cookiearray[i].split("=")[1];
+                    document.getElementById("cookieID").value = value;
+                }
+                getCookieID();
+            </script>
+            -->
+
+        <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+    </form>
+</body>
+
+</html>

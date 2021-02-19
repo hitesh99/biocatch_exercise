@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Results</title>
+    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://getbootstrap.com/docs/4.0/examples/floating-labels/floating-labels.css" rel="stylesheet" />
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="https://bcdn-4ff4f23f.we-stats.com/scripts/4ff4f23f/4ff4f23f.js"></script>
+    <div class="text-center mx-auto" style="width: 400px;">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                <li class="breadcrumb-item"><a href="/transfer">Transfer</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Final</li>
+                <li class="breadcrumb-item"><a href="javascript:deleteSessionID()">Logout</a></li>
+            </ol>
+        </nav>
+
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+
+        <div class="form-group">
+            <label>Session ID</label>
+            <input type="text" id="sessionID" class="form-control" readonly />
+
+            <label>Init Value</label>
+            <input type="text" id="initValue" class="form-control" readonly />
+
+            <label>Score</label>
+            <textarea class="form-control" id="scoreTextArea" rows="20" readonly></textarea>
+        </div>
+    </div>
+
+           <script type="text/javascript">
+            cdApi.changeContext(window.location.pathname);
+            let r = window.sessionStorage.setCustomerSessionId
+            document.getElementById("sessionID").value = r;
+            cdApi.setCustomerSessionId(r)
+
+            let x = JSON.parse(window.sessionStorage.getItem("initvalue"))
+            document.getElementById("initValue").value = x.bcStatus;
+
+             function deleteSessionID () {
+              window.sessionStorage.removeItem("setCustomerSessionId"),
+              window.location.href="/";
+            }
+
+            let z = window.sessionStorage.getItem("score")
+            document.getElementById("scoreTextArea").value = z;
+           </script>
+
+
+</body>
+
+</html>
