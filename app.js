@@ -52,19 +52,15 @@ app.get("/initCall", async (req, res) => {
 
 
 app.get("/getScore", async (req, res) => {
-var options = {
-  'method': 'POST',
-  'url': `https://api-4ff4f23f.eu.v2.we-stats.com/api/v6/score?action=getScore&customerId=dummy&customerSessionId=${req.query.customerSessionId}&uuid=${req.query.uuid}`,
-  'headers': {
-  }
-};
-request(options, function (error, response) {
-  if (error) throw new Error(error);
-  console.log(response.body);
-  console.log(req.query.customerSessionId);
-  console.log(req.query.uuid);
-  res.send(response.body)
-});
+    var options = {
+        'method': 'POST',
+        'url': `https://api-4ff4f23f.eu.v2.we-stats.com/api/v6/score?action=getScore&customerId=dummy&customerSessionId=${req.query.customerSessionId}&uuid=${req.query.uuid}`,
+        'headers': {}
+    };
+    request(options, function(error, response) {
+        if (error) throw new Error(error);
+        res.send(response.body)
+    });
 });
 
 /*
