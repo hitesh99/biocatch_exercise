@@ -82,7 +82,7 @@
 
                 </div>
             </div>
-            <button class="btn btn-med btn-info btn-block" type="button" onclick="getScore()">Transfer</button>
+            <button class="btn btn-med btn-info btn-block" type="button" onclick="getScorePayload()">Transfer</button>
 <br></br>
                 <div class="form-group"  style="width: 400px;">
             <label>Session ID</label>
@@ -97,16 +97,23 @@
 
              function deleteSessionID () {
               window.sessionStorage.removeItem("setCustomerSessionId"),
-              window.location.href="/";
+              window.sessionStorage.removeItem("uniqueID"),
+              window.sessionStorage.removeItem("fullPayload"),
+              window.sessionStorage.removeItem("riskLevel"),
+              window.sessionStorage.removeItem("score"),
+              window.location.href="/login";
             }
 
 
-            async function getScore() {
+            async function getScorePayload() {
                    let x = window.sessionStorage.getItem("setCustomerSessionId")
                    let y = window.sessionStorage.getItem("uniqueID")
                    const response = await fetch(`/getScore?customerId=dummy&customerSessionId=${x}&uuid=${y}`);
-                    const score = await response.json();
-                    window.sessionStorage.setItem("score", JSON.stringify(score));
+                    const fullPayload = await response.json();
+                    console.log(fullPayload)
+                    window.sessionStorage.setItem("fullPayload", JSON.stringify(fullPayload));
+                    window.sessionStorage.setItem("riskLevel", fullPayload.riskLevel);
+                    window.sessionStorage.setItem("score", fullPayload.score);
                    window.location.href = `/finalpage`; 
 
                 }
